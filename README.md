@@ -1,4 +1,4 @@
-# SOS (Student Overload Simulator)
+# SOS: Simulating On-campus Stress
 
 Agent-based simulation of academic anxiety dynamics and sociological interventions, built on [SINA](https://github.com/Kayla-Cheung/SINA).
 

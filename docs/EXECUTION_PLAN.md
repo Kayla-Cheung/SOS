@@ -6,6 +6,18 @@
 
 **Scope:** One human experiment, **positive (90/10) vs balanced (50/50)** training, one LLM baseline, one prespecified interpretation-bias endpoint. No multi-agent environment, memory architecture, fine-tuning, or new human recruitment.
 
+## Stage 0 — Synthetic Pilot: Start Now
+
+A runnable pilot lives in [experiments/anxiety_fidelity_pilot](../experiments/anxiety_fidelity_pilot/). It does not depend on choosing a human dataset.
+
+1. Run locally: `python pilot.py --mode mock --per-arm 2`; this tests the code only (fake random responses, **no LLM**).
+2. Validate the tests: `python -m unittest discover -s tests -v`.
+3. If desired, configure a private API key locally, inspect API pricing, and run `python pilot.py --mode api --model gpt-4.1-mini --per-arm 2 --confirm-api-cost` with the SDK installed. This makes 8 billable calls. Never commit the API key.
+4. Examine `manifest.json`, `responses.jsonl` and `summary.json`. Fix parsing/experimental design problems before scaling.
+5. Only after a good smoke test, consider `--per-arm 30` as an **exploratory** model-only run. No claims about human fidelity or clinical anxiety.
+
+**Gate to Stage 1:** Pilot 0 is a software feasibility exercise; selecting and auditing real human data is a separate research requirement and can happen afterward.
+
 ## Stage 1 — Data and Protocol Audit (first priority)
 
 Check the [public OSF data](https://osf.io/2x3jq/), [original OSF project](https://osf.io/3b67v/), and [cleaning documentation](https://github.com/TeachmanLab/MT-Data-ManagingAnxietyStudy-Cleaning).

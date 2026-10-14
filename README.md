@@ -2,6 +2,10 @@
 
 Agent-based simulation of academic anxiety dynamics and sociological interventions, built on [SINA](https://github.com/Kayla-Cheung/SINA).
 
+## First Experiment
+
+[Run Pilot 0: synthetic interpretation-bias experiment](experiments/anxiety_fidelity_pilot/README.md) — no human dataset required for the software smoke test; not a human-validity result.
+
 ## Mechanics
 
 - **State Representation**: Tracks cognitive load ($L$), social buffer ($R$), internal anxiety ($A$), and burnout threshold ($B$).

@@ -4,6 +4,14 @@
 **Focus:** Human behavioral fidelity in anxiety-related cognitive experiments  
 **Status:** Pre-experiment design · Updated 2026-10-14
 
+## Pilot 0 — Run the Pipeline Before Choosing Human Data
+
+A small **synthetic, CBM-I-inspired** protocol is now implemented at [experiments/anxiety_fidelity_pilot](../experiments/anxiety_fidelity_pilot/). It uses 12 original ambiguous scenarios, 10 training examples, a positive-ending condition (9/10) versus balanced endings (5/10), counterbalanced pre/post assessment, and one fixed LLM.
+
+**Purpose:** Check the experiment engine, output format, randomization, logging and sensitivity to different training contexts. The optional `--mode mock` run uses random fake ratings and is only a software test. Neither synthetic LLM results nor mock outputs establish human anxiety or human behavioral fidelity.
+
+A human benchmark is **not required to run Pilot 0**, but **is required before claims of human–agent fidelity**. The R34 dataset below remains one candidate rather than a mandatory prerequisite for experimentation. The controlled human-data study begins only after its data/materials audit.
+
 ## Research Goal
 
 **Can LLM agents quantitatively reproduce human behavioral responses and intervention effects in anxiety-related cognitive tasks?**

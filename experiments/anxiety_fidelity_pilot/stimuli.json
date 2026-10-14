@@ -1,0 +1,30 @@
+{
+  "version": "pilot0-synthetic-2026-10-14",
+  "notice": "Original synthetic materials. Not taken from any human study or validated questionnaire.",
+  "assessment": [
+    {"id":"A01","scenario":"You send a friend a message suggesting a weekend plan. Several hours pass without a reply.","negative":"They are deliberately ignoring you.","benign":"They have been busy and have not checked their messages."},
+    {"id":"A02","scenario":"After presenting a short idea at a meeting, a colleague says they want to speak with you afterward.","negative":"They thought your contribution was poor.","benign":"They want to discuss an idea your presentation raised."},
+    {"id":"A03","scenario":"You notice two acquaintances stop talking when you enter a room.","negative":"They were criticizing you.","benign":"Their conversation had simply come to an end."},
+    {"id":"A04","scenario":"A manager gives brief feedback on a piece of work you submitted.","negative":"They are dissatisfied with your performance.","benign":"They were short on time and will discuss details later."},
+    {"id":"A05","scenario":"A friend cancels a plan at the last minute without much explanation.","negative":"They no longer enjoy spending time with you.","benign":"An unexpected obligation has come up."},
+    {"id":"A06","scenario":"You receive an invitation to a meeting with no agenda attached.","negative":"You are about to receive bad news about your work.","benign":"The organizer has not yet prepared the meeting agenda."},
+    {"id":"B01","scenario":"Someone you know walks past without saying hello.","negative":"They are upset with you.","benign":"They were distracted and did not notice you."},
+    {"id":"B02","scenario":"You ask a question in a group discussion and nobody responds immediately.","negative":"They think your question was foolish.","benign":"People are considering how to answer."},
+    {"id":"B03","scenario":"An important email arrives with the subject line 'Can we talk?'.","negative":"The sender is going to complain about something you did.","benign":"The sender wants to coordinate an upcoming task."},
+    {"id":"B04","scenario":"After you share a draft, the reviewer asks for several changes.","negative":"The reviewer believes your abilities are inadequate.","benign":"The reviewer sees ways to improve a promising draft."},
+    {"id":"B05","scenario":"A close friend seems unusually quiet during lunch.","negative":"You must have done something to upset them.","benign":"They may be tired or preoccupied with something unrelated."},
+    {"id":"B06","scenario":"A supervisor postpones a scheduled conversation with you.","negative":"They are avoiding an unpleasant discussion with you.","benign":"An urgent scheduling conflict has arisen."}
+  ],
+  "training": [
+    {"id":"T01","stem":"You hear that your group leader wants to review your recent contribution.","positive":"They appreciated your work and would like your input on the next step.","negative":"They believe your work has been disappointing."},
+    {"id":"T02","stem":"A friend has not responded to your invitation.","positive":"They reply later and explain they had been offline.","negative":"They were choosing to avoid meeting you."},
+    {"id":"T03","stem":"A tutor invites you to discuss a recent assignment.","positive":"They want to suggest an opportunity related to your strong ideas.","negative":"They are concerned that your performance is inadequate."},
+    {"id":"T04","stem":"A group chat becomes quiet immediately after you post a suggestion.","positive":"Other members later respond positively after considering it.","negative":"Other members privately dismiss the suggestion."},
+    {"id":"T05","stem":"Someone you respect sends a short note asking to meet.","positive":"They want to thank you for your help on a project.","negative":"They intend to criticize how you handled a project."},
+    {"id":"T06","stem":"You see a classmate speaking seriously with an instructor after a session.","positive":"They are discussing an upcoming group opportunity.","negative":"They are complaining about something you did."},
+    {"id":"T07","stem":"A colleague looks thoughtful after reading your report.","positive":"They are considering how to build on your findings.","negative":"They believe the report has serious flaws."},
+    {"id":"T08","stem":"A teammate suggests revising your shared plan.","positive":"They have found a way for the team to improve the outcome.","negative":"They think you caused the team's problems."},
+    {"id":"T09","stem":"You have not received feedback on a submitted proposal.","positive":"The reviewers are taking time to consider it carefully.","negative":"The reviewers have rejected it without informing you."},
+    {"id":"T10","stem":"An acquaintance gives you a brief answer when you ask how their day is going.","positive":"They are in a hurry but are happy to talk another time.","negative":"They are annoyed that you approached them."}
+  ]
+}

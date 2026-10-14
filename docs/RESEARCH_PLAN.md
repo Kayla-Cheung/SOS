@@ -1,52 +1,52 @@
 # SOS Research Plan
 
 **Project:** SOS — Simulating On-campus Stress  
-**Status:** Preliminary research / experiment design  
+**Stage:** Anxiety simulation validity (pre-experiment)  
 **Updated:** 2026-10-14
 
-## Research Goal
+## Goal
 
-Before developing SOS as a simulation of campus stress and anxiety, we need to test a fundamental assumption:
+Before using SOS to study campus stress and anxiety, test a narrower prerequisite:
 
-> **Can LLM agents reproduce human behavioral responses in anxiety-related psychological experiments?**
+> **Can an LLM agent reproduce human changes in anxiety-related interpretation bias under comparable experimental conditions?**
 
-This study evaluates **human behavioral fidelity**, not whether LLMs experience anxiety. A positive result would support simulation validity for specific experimental tasks, not the general replacement of human participants.
+The target is **task-specific human behavioral fidelity**, not an assertion that an LLM experiences anxiety, has human psychological mechanisms, or can replace clinical participants.
 
-## Research Questions
+## Primary Human Reference
 
-1. **Behavioral fidelity:** Do agent response distributions resemble those of human participants?
-2. **Intervention fidelity:** Can agents reproduce the direction *and magnitude* of human behavioral changes after anxiety-related cognitive interventions?
-3. **Generalization:** Do observed effects transfer to unseen scenarios rather than merely following task instructions?
-4. **Potential extension:** If systematic gaps exist, can memory or structured cognitive mechanisms reduce them?
+**MindTrails Managing Anxiety Study (R34; Ji et al., 2021)**: 807 adults with elevated anxiety in a randomized CBM-I trial. The original design included positive interpretation training (**90% positive / 10% negative**), balanced training (**50% / 50%**), and no training, crossed with anxious or neutral imagery primes.
 
-## Human Data Candidates
+- [Human study](https://doi.org/10.1016/j.brat.2021.103864)
+- [Official reconstruction and cleaning documentation](https://github.com/TeachmanLab/MT-Data-ManagingAnxietyStudy-Cleaning)
+- [Public OSF component](https://osf.io/2x3jq/)
+- [Original paper's OSF project](https://osf.io/3b67v/)
 
-**Primary target: Cognitive Bias Modification for Interpretation (CBM-I)** — experiments measuring interpretations of ambiguous situations before and after training.
+The cleaning repository documents a public dataset with **item-level BBSIQ and Recognition Ratings (RR)**, time points, and randomized conditions. **We have not yet independently verified the downloadable files, original stimuli, complete trial sequences, or available matched assessment time points.** The reconstruction uses multiple historical raw-data versions, so all data and scoring discrepancies must be logged.
 
-- [MindTrails / Calm Thinking data and cleaning code](https://github.com/TeachmanLab/MT-Data-CalmThinkingStudy)
-- [MindTrails OSF resources](https://osf.io/s8v3h/)
-- [Abado et al. (2026), CBM-I study](https://doi.org/10.1038/s41398-026-04122-2)
+## Minimal Experiment
 
-**Data availability is not yet confirmed.** Before implementation, verify access to original stimuli, trial-level human responses, experimental groups, scoring rules, and pre/post measurements.
+**Question:** Does a baseline LLM reproduce the human difference in *interpretation-bias change* between positive and 50/50 CBM-I training?
 
-## Experimental Workflow
+1. **Audit data and protocol.** Verify the participant-level tables, item-level scoring, stimulus text/materials, trial order, training procedure, assessment schedule, reuse permissions, and missing-data patterns. Confirm the exact 90/10 and 50/50 conditions and neutral-prime subset.
+2. **Reproduce the human benchmark.** Recompute the original bias measures using the official scoring definitions. Choose **one primary behavioral endpoint** (RR or BBSIQ) and the earliest *verified common pre/post measurement* for both arms. Report sample sizes and missingness at each time point. Do not invent an immediate post-test if none exists.
+3. **Run a minimal LLM baseline.** One fixed model, two training arms, independent agent sessions, matched instructions and available stimuli. The agent sees no withheld human responses and is scored with the same verified procedure. Start with a small smoke test, then approximately 30 simulated trajectories per arm as an exploratory pilot (not a powered equivalence study).
+4. **Evaluate fidelity.** Compare the human and agent **difference-in-differences** in bias scores, plus item/response distributions, simulated-subject variability, and performance on available unseen evaluation stimuli. Report uncertainty and a human–human reference split. Do not use statistical nonsignificance as evidence of equivalence.
+5. **Decide on an extension.** Only after a reproducible mismatch is observed should we test memory, calibrated sampling, cognitive-state modeling, or LoRA fine-tuning against this baseline.
 
-1. **Audit data:** Select one human study whose experimental conditions, stimuli, and responses can be reproduced.
-2. **Rebuild the human baseline:** Clean and reconstruct the task; verify reported behavioral measures and treatment–control differences.
-3. **Run baseline agents:** Use a fixed LLM with standardized prompts and independent sessions. Replicate accessible task conditions without showing agents withheld human answers. Keep training and evaluation stimuli separate.
-4. **Compare fidelity:** Measure response-distribution differences, pre/post and treatment–control effect-size errors, generalization to held-out stimuli, and variability across simulated participants. Use human–human comparisons and uncertainty intervals as reference points.
-5. **Investigate failures:** Only if consistent mismatches are found, test targeted improvements such as episodic memory or structured decision-making against the same human benchmarks.
+## Go / No-Go Rule
 
-## Validity Requirements
+**Do not run the intervention simulation** unless the human stimuli, task sequence, scoring rules, intervention arms, and comparable outcomes can be independently reconstructed. If stimulus materials are unavailable, publish an honest feasibility audit or switch to another open anxiety-related cognitive experiment; do not create substitute stimuli and describe the result as a faithful replication.
 
-- Text prompts are **not equivalent** to real human anxiety induction or clinical intervention.
-- Similar average scores do not imply similar individual variability or psychological mechanisms.
-- Control for prompt leakage, task contamination, model settings, and possible drift between simulated conditions.
-- Do not interpret nonsignificant differences as proof of equivalence; define acceptable errors in advance.
+## Interpretation and Safeguards
 
-## Current Status and Next Step
+- The human study involved real people, repeated sessions, and high attrition. Text-based LLM prompting is not the same intervention or clinical outcome.
+- A matching average effect is insufficient if choice distributions, between-subject variation, or held-out behavior diverge.
+- Control prompt demand effects, contamination, model settings, test leakage, and possible changes in simulated participant identity.
+- Keep identifiable or restricted participant data, raw model logs with sensitive content, and API keys out of the public repository.
 
-**Completed:** Initial literature review, research objective, candidate datasets, and a conceptual evaluation protocol.  
-**Not yet completed:** Dataset verification, runnable experiment, or human–agent evaluation.
+## Status and Immediate Next Step
 
-**Next step:** Verify whether MindTrails or another CBM-I dataset contains enough accessible trial-level data and experimental materials for a faithful replication. If not, choose another anxiety-related cognitive task before building agents.
+**Completed:** Research question, literature reconnaissance, candidate study and experimental outline.  
+**Pending:** OSF data audit, reconstruction of stimulus/protocol, human baseline, runnable agent experiment, and all analyses.
+
+**Next:** Complete [the execution plan](EXECUTION_PLAN.md), beginning with the dataset and materials audit. No mechanism development or SOS integration is scheduled yet.

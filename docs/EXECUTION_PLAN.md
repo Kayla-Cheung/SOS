@@ -1,77 +1,80 @@
-# Anxiety Simulation Pilot — Execution Plan
+# SOS — Chinese High-School Behavioral Fidelity: Execution Plan
 
-**Status:** Not started  
-**Human reference:** MindTrails Managing Anxiety Study (R34; Ji et al., 2021)  
-**Scope:** One anxiety-related interpretation-bias task, two CBM-I training arms, one baseline LLM. No SOS engine, multi-agent simulation, memory architecture, or fine-tuning in the pilot.
+**Version:** 2026-10-14  
+**Target:** Ordinary mainland Chinese senior-high students; academic and peer-evaluation stress contexts.  
+**Status:** Preparation only; no claimed completed dataset audit or experiment.
 
-This is a proposed **four-stage execution sequence**, not a claim that the necessary data or stimuli have already been obtained. Approximate effort is a planning aid, not a deadline.
+This replaces the adult R34 intervention-first plan. There are **two independent evidence tracks**: (A) a reproducible adolescent methods pipeline using an open human dataset, and (B) Chinese high-school population validation. **Only Track B can support claims about the target population.**
 
-## Stage 1 — Dataset and Protocol Audit (first priority; ~1 week)
+## Gate 0 — Evidence and Data Audit (start now; ~3–7 working days)
 
-**Sources:** [Official cleaning repository](https://github.com/TeachmanLab/MT-Data-ManagingAnxietyStudy-Cleaning), [OSF public component](https://osf.io/2x3jq/), [Ji et al. (2021)](https://doi.org/10.1016/j.brat.2021.103864).
+**China-first search and contact:**
 
-Tasks:
+- [Lu et al., 2007](https://doi.org/10.1080/15374410701776301): determine whether the high-school subset of 1,004 pupils can be identified and whether per-scenario responses and stimuli are available.
+- [Fu et al., 2015](https://doi.org/10.1891/0889-8391.29.3.253): request full Chinese scenarios, instructions, participant-level outcomes, age/grade distribution, intervention and control procedures.
+- [Fu et al., 2013](https://doi.org/10.1016/j.dcn.2012.11.003): check the Chinese scenario materials and clinical sample restrictions.
+- [Bai et al., 2025](https://doi.org/10.1002/pits.23570): inspect the test-anxiety interpretation measure and whether participant/item-level data can be requested; **mean age 12.27 means this is not a senior-high reference sample**.
 
-- Retrieve the official data manifest/codebook and lawful public files; record file versions, SHA-256 checksums, licensing/access restrictions, and missing files. Do not redistribute restricted data.
-- Inspect participant, condition, BBSIQ and RR tables; identify participant IDs, session/timepoint identifiers, item columns, missingness, and scoring rules.
-- Locate exact **training stimuli, assessment stimuli, instructions, presentation order, feedback/comprehension prompts**, and which versions are permitted to be reused.
-- Confirm experimental design: positive (90/10) versus balanced (50/50) training, neutral imagery prime, number of trials per session, and timing of each outcome measure.
-- Check whether a comparable pre/post pair and an adequate human sample exist within the intended comparison. Distinguish the 807-person ITT cohort from the smaller analyzable subset.
-- Read the team's notes on reconstruction from raw Sets A/B and list discrepancies with the original paper's values.
+**Methodological open-data track:**
 
-**Deliverables:** `experiments/anxiety_fidelity_pilot/data_audit.md`, source inventory, data dictionary, explicit **GO / NO-GO** decision.
+- Audit [de Voogd et al., 2018](https://doi.org/10.1371/journal.pone.0194274) and its [OSF repository](https://osf.io/bx2hd/). A published OSF link is **not verification** that the original per-trial stimuli, responses, and training materials can all be retrieved.
+- As needed, audit [de Voogd et al., 2017](https://doi.org/10.1371/journal.pone.0181147) and [its OSF page](https://osf.io/4gtmh/).
+- Record archival provenance, files, variables, study population, trial materials, conditions, outcome timepoints, missingness, reuse restrictions and accessibility failures.
+- Keep the US adult [MindTrails R34](https://github.com/TeachmanLab/MT-Data-ManagingAnxietyStudy-Cleaning) as an optional script/data-format sanity check, not a primary behavioral reference.
 
-**Gate:** Proceed to an intervention simulation only if required materials and comparable measurements are verified. Otherwise stop, request materials through legitimate channels, or select a different open anxiety experiment.
+**Deliverable:** `experiments/high_school_fidelity/data_audit.md` with source-by-source **AVAILABLE / REQUESTED / MISSING** status and two separate GO/NO-GO decisions:
 
-## Stage 2 — Reproduce Human Baseline (~1 week)
+- **Gate A:** complete matching adolescent human task and response data available for pipeline reproduction?
+- **Gate B:** comparable **Chinese senior-high** item-level responses and original stimuli available for target-population validation?
 
-- Process only the approved public files in a local, Git-ignored data directory.
-- Filter conditions with clear, reproducible criteria. Verify actual sample sizes, missingness, and treatment balance before analysis.
-- Use the official scoring definitions; RR ratings are coded **0–3 in this R34 study** (not 1–4 as in a separate Calm Thinking study).
-- Choose the **primary outcome and measurement window before reviewing agent results**; favor a behavioral interpretation-bias measure, not a general anxiety questionnaire as the sole outcome.
-- Reproduce human condition-specific means and the treatment-by-time interaction or difference-in-differences; reconcile discrepancies with the original analysis, documenting any unavoidable differences.
-- Preserve original design complexity and attrition in the audit. If a neutral-prime-only subgroup is too small or incomparable, reconsider the restriction before running agents.
+Do **not** run any agents just because a paper reports group means.
 
-**Deliverables:** `prepare_human.py`, `human_baseline.md`, cleaned non-sensitive derived metrics, minimal automated tests.
+## Stage 1A — Build a Reproducible Adolescent Pipeline (conditional; ~1 week)
 
-**Gate:** Human outcome estimates and analytic population are understood and independently reproducible.
+If Gate A passes, select **one** precisely documented Dutch adolescent experiment. Reproduce its human analyses and then implement one fixed LLM with exactly that study's tasks and scoring.
 
-## Stage 3 — Minimal Agent Experiment (~1 week, only after Gates 1–2)
+For de Voogd 2018, preserve **CBM-I vs neutral-placebo**, **eight sessions** and original assessment protocol. Do not substitute the adult R34 positive-vs-50/50 conditions or invent an immediate post-test. A shortened version is an **exploratory new protocol**, not a direct human intervention replication.
 
-- Implement stimulus presentation, response validation, feedback, and logging; no answer leakage from human trials.
-- Fix model/provider/version, prompt text, decoding settings and sampling configuration. Store prompt/config hashes and anonymized trajectory IDs.
-- Use exactly two conditions: **POSITIVE** and **FIFTY_FIFTY**; preserve the chosen prime condition and verified measurement schedule.
-- Run a tiny smoke test first (for example 2 trajectories per arm) to ensure outcome reconstruction works. Then run an exploratory pilot of roughly **30 independent trajectories per arm**, subject to a recorded API budget.
-- Separate training items from held-out assessment items; log all model outputs and parsing failures. If exact original stimuli cannot be used, do not label the experiment a direct human replication.
+**Deliverables:** `prepare_human.py`, human score verification, `run_agents.py`, configuration/seed/prompt logging, minimal `evaluate.py`.
 
-**Deliverables:** `run_agents.py`, `config.yaml`, protocol tests, trajectory summaries and run log. Keep sensitive/raw files and secrets out of Git.
+**Outcome:** tested reproducibility infrastructure, **not** evidence that Chinese high-school behaviors are faithfully simulated.
 
-**Gate:** Agent outputs can be scored by the same measurement procedure as human outputs, with all experiment conditions and costs traceable.
+## Stage 1B — Chinese High-School Reference (primary scientific gate)
 
-## Stage 4 — Fidelity Report and Research Decision (~1 week)
+If existing Chinese senior-high item-level data and original scenarios can be obtained, use them with the required access agreements.
 
-**Prespecified primary quantity** (for the verified outcome `Y`):
+**If not available:** discuss a new data collection with an experimental/developmental psychology collaborator; obtain institutional ethics approval, school permission, guardian permission where required and student assent **before** recruitment. Begin with a small **item-comprehension pilot** to validate clear, age-appropriate, low-risk Chinese academic stress vignettes, not a CBM-I treatment.
 
-\[
-\Delta_H = (\bar Y_{post}-\bar Y_{pre})_{H,positive}-(\bar Y_{post}-\bar Y_{pre})_{H,50/50}
-\]
+Candidate vignette domains: exam outcomes, teacher feedback, class rankings, family expectations, peer comparisons. For each, write threat and non-threat interpretations without making one answer obviously correct. Blind-review ambiguity/clarity and avoid distressing or diagnostic stimuli.
 
-\[
-\Delta_A = (\bar Y_{post}-\bar Y_{pre})_{A,positive}-(\bar Y_{post}-\bar Y_{pre})_{A,50/50}
-\]
+**Measurement:** a fixed forced-choice or ordinal interpretation task, with demographic/grade variables kept minimal, optional validated test-anxiety instruments under an approved protocol, and separate evaluation items. A small item pilot is for readability/feasibility, **not** for proving fidelity.
 
-\[
-\mathrm{Fidelity\ Error}=|\Delta_A-\Delta_H|
-\]
+**Deliverables:** approved protocol (if recruiting), scenario bank with permissions, scoring rubric, anonymized participant × item behavioral table, consent/data governance notes.
 
-- Report uncertainty, missingness, response distributions, between-trajectory variability, and human–human reference variation.
-- Document non-comparable aspects (e.g. real-life human training duration vs LLM text exposure) and demand-characteristic risks.
-- Make one evidence-based decision: **extend** to another model or held-out task; **test a mechanism** targeting an observed bias; or **stop/change dataset**.
-- Do not claim equivalence or clinical efficacy from this exploratory sample.
+**Gate B:** matching Chinese-high-school human reference confirmed; otherwise stop at a methods pilot and report the external-validity limitation.
 
-**Deliverables:** `evaluate.py`, `results/pilot_report.md`, reproducible figures/tables and a concise conclusion with limitations.
+## Stage 2 — Human–Agent Baseline Fidelity (after Gate B; ~1 week)
 
-## Repository Layout (planned, not yet created)
+- One fixed model and one standardized Chinese prompt. No anxiety role-play, explicit target distribution, memory system, GOSI, or fine-tuning.
+- Present **identical Chinese vignettes** and answer formats to the humans and the LLM; do not disclose human choices to the LLM.
+- Predefine analysis and held-out items. Separate person-level and item-level uncertainty; compare response distributions, negative interpretations, between-person heterogeneity and held-out generalization.
+- Include a human–human split benchmark and perturbation/neutral-control checks. A few dozen LLM samples per condition are a pipeline pilot, **not** proof of equivalence or human-like individuality.
+
+**Deliverables:** `pilot_report.md`, analysis scripts, plots and a transparent limitations section.
+
+## Stage 3 — Intervention Fidelity (optional, later)
+
+Only pursue if there is a **matched Chinese** CBM-I RCT dataset with verified task, treatment/control exposure and pre/post interpretation-bias outcomes, or an independently approved new intervention study.
+
+Primary contrast: difference in pre/post changes between treatment and control for humans and agents. Test effect magnitude, distributions, generalization, attrition differences, and prompt-demand artifacts. Do not report clinical benefit from LLM results.
+
+**Deliverable:** separate intervention protocol and preregistered analysis; *not* part of the current minimal pilot.
+
+## Stage 4 — Model Improvements (conditional)
+
+Only after a reliable behavioral gap is established, compare calibration, explicit cognitive-state dynamics, bounded/episodic memory, or LoRA under equal human data access and held-out evaluation.
+
+## Planned Repository Layout
 
 ```text
 SOS/
@@ -79,23 +82,23 @@ SOS/
     RESEARCH_PLAN.md
     EXECUTION_PLAN.md
   experiments/
-    anxiety_fidelity_pilot/
+    high_school_fidelity/
       README.md
       data_audit.md
-      config.yaml
       prepare_human.py
       run_agents.py
       evaluate.py
+      config.yaml
       tests/
       results/
-      data/          # local only; add to .gitignore before use
+      data/       # local/private; never commit sensitive human data
 ```
 
-## First Working Session — Concrete Next Actions
+## Next Session — Exact Task
 
-1. Confirm the R34 official OSF `public-v1.0.0.zip` manifest can be accessed and inspected.
-2. Create a field inventory for `participant`, `bbsiq`, and `rr`, including item-level and timepoint availability.
-3. Locate the actual training and assessment stimulus texts or record their absence.
-4. Write `data_audit.md` with evidence links and the next GO / NO-GO decision.
+1. Read and catalogue the four China-relevant studies above; create a table of age/grade, task, stimuli, response accessibility and author contact.
+2. Inspect the Dutch adolescent OSF file manifest; **do not assume the stimuli are in the archive**.
+3. Write a factual `data_audit.md` with data access blockers and evidence links.
+4. Decide whether to proceed with Stage 1A while contacting Chinese authors, or whether existing Chinese data enable Stage 1B directly.
 
-**Do not start LLM API calls or agent architecture work in this session.**
+**Hard stop:** No claims of Chinese high-school behavioral validity without a genuine Chinese high-school human reference; no study involving minors without prior ethics and permissions.
